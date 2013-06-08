@@ -2,3 +2,4 @@
 *.iml
 senseIt/build/
 .DS_Store
+.gradle/*
