@@ -87,6 +87,8 @@ public class AvailableSensorsActivity extends Activity implements AdapterView.On
             case Sensor.TYPE_GRAVITY:
             case Sensor.TYPE_ACCELEROMETER:
             case Sensor.TYPE_MAGNETIC_FIELD:
+            case Sensor.TYPE_GYROSCOPE:
+            case Sensor.TYPE_PRESSURE:
                 return true;
 
             default:
@@ -117,6 +119,12 @@ public class AvailableSensorsActivity extends Activity implements AdapterView.On
                     break;
                 case Sensor.TYPE_MAGNETIC_FIELD:
                     cl = MagneticSensor.class;
+                    break;
+                case Sensor.TYPE_GYROSCOPE:
+                    cl = GyroscopeSensor.class;
+                    break;
+                case Sensor.TYPE_PRESSURE:
+                    cl = PressureSensor.class;
                     break;
             }
             if (cl != null) {

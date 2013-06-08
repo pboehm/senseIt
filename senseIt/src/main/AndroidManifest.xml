@@ -25,6 +25,10 @@
         <activity android:name=".LightSensor"/>
         <activity android:name=".ProximitySensor"/>
         <activity android:name=".GravitySensor"/>
+        <activity android:name=".PressureSensor"/>
+        <activity
+            android:name=".GyroscopeSensor"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".AccelerometerSensor"
             android:screenOrientation="portrait"/>
