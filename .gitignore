@@ -1,0 +1,4 @@
+.idea/
+*.iml
+senseIt/build/
+.DS_Store
