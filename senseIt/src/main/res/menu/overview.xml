@@ -3,8 +3,8 @@
         android:title="@string/action_settings"
         android:orderInCategory="100"
         android:showAsAction="never" />
-    <item android:id="@+id/available_sensors"
-          android:title="@string/action_available_sensors"
+    <item android:id="@+id/capture_mic"
+          android:title="@string/capture_mix_menu_item"
           android:orderInCategory="100"
           android:showAsAction="never" />
 </menu>

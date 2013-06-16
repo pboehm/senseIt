@@ -7,5 +7,6 @@
     <string name="action_available_sensors" >Available Sensors</string>
 
     <string name="hello_world" >Hello world!</string>
+    <string name="capture_mix_menu_item">Capture Microphone</string>
 
 </resources>

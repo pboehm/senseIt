@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -66,9 +67,10 @@ public class AvailableSensorsActivity extends Activity implements AdapterView.On
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.available_sensors:
-                Intent i = new Intent(this, AvailableSensorsActivity.class);
+            case R.id.capture_mic:
+                Intent i = new Intent(this, CaptureMicActivity.class);
                 startActivity(i);
+                break;
         }
         return true;
     }
@@ -135,4 +137,5 @@ public class AvailableSensorsActivity extends Activity implements AdapterView.On
             Toast.makeText(getApplicationContext(), "Sensor is not implemented", Toast.LENGTH_SHORT).show();
         }
     }
+
 }
