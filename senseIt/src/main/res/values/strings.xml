@@ -8,5 +8,7 @@
 
     <string name="hello_world" >Hello world!</string>
     <string name="capture_mix_menu_item">Capture Microphone</string>
+    <string name="goto_documentation">Documentation</string>
+    <string name="goto_source">Source Code</string>
 
 </resources>

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -52,8 +53,11 @@ public class AvailableSensorsActivity extends Activity implements AdapterView.On
 
             String description = "Vendor: " + s.getVendor();
 
-            if (isSensorImplemented(s))
-                description += " is implemented";
+            description += "\nPower (when in action): " + s.getPower() + " mA";
+            description += "\nResolution: " + s.getResolution();
+
+            if (! isSensorImplemented(s))
+                description += "\n  --> has not been implemented";
 
             sensor.put("name", s.getName());
             sensor.put("description", description);
@@ -70,6 +74,10 @@ public class AvailableSensorsActivity extends Activity implements AdapterView.On
             case R.id.capture_mic:
                 Intent i = new Intent(this, CaptureMicActivity.class);
                 startActivity(i);
+                break;
+            case R.id.goto_source:
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/pboehm/senseit"));
+                startActivity(browserIntent);
                 break;
         }
         return true;
@@ -134,7 +142,8 @@ public class AvailableSensorsActivity extends Activity implements AdapterView.On
                 startActivity(intent);
             }
         } else {
-            Toast.makeText(getApplicationContext(), "Sensor is not implemented", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Sensor has not been implemented",
+                    Toast.LENGTH_SHORT).show();
         }
     }
 

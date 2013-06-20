@@ -2,9 +2,6 @@ package org.pboehm.senseit;
 
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
-import android.media.AudioManager;
-import android.media.SoundPool;
-import android.os.Bundle;
 
 public class GyroscopeSensor extends BaseSensorHandler {
 

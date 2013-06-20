@@ -1,10 +1,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/action_settings"
-        android:title="@string/action_settings"
-        android:orderInCategory="100"
-        android:showAsAction="never" />
     <item android:id="@+id/capture_mic"
           android:title="@string/capture_mix_menu_item"
+          android:orderInCategory="100"
+          android:showAsAction="never" />
+    <item android:id="@+id/goto_documentation"
+          android:title="@string/goto_documentation"
+          android:orderInCategory="100"
+          android:showAsAction="never" />
+    <item android:id="@+id/goto_source"
+          android:title="@string/goto_source"
           android:orderInCategory="100"
           android:showAsAction="never" />
 </menu>

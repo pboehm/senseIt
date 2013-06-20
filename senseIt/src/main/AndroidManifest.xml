@@ -18,25 +18,40 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="org.pboehm.senseit.AvailableSensorsActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LightSensor"/>
-        <activity android:name=".ProximitySensor"/>
-        <activity android:name=".GravitySensor"/>
-        <activity android:name=".PressureSensor"/>
+        <activity
+            android:name=".LightSensor"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ProximitySensor"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".GravitySensor"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".PressureSensor"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".GyroscopeSensor"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".AccelerometerSensor"
             android:screenOrientation="portrait"/>
-        <activity android:name=".MagneticSensor"/>
-        <activity android:name=".CaptureMicActivity"/>
+        <activity
+            android:name=".MagneticSensor"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".CaptureMicActivity"
+            android:screenOrientation="portrait"/>
+
+        <service android:name=".AudioCaptureService"/>
     </application>
 
 </manifest>
