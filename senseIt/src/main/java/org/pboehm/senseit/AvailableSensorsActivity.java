@@ -75,6 +75,10 @@ public class AvailableSensorsActivity extends Activity implements AdapterView.On
                 Intent i = new Intent(this, CaptureMicActivity.class);
                 startActivity(i);
                 break;
+            case R.id.goto_documentation:
+                Intent in = new Intent(this, SensorExampleActivity.class);
+                startActivity(in);
+                break;
             case R.id.goto_source:
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/pboehm/senseit"));
                 startActivity(browserIntent);

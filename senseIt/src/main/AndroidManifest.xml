@@ -50,6 +50,7 @@
         <activity
             android:name=".CaptureMicActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".SensorExampleActivity"/>
 
         <service android:name=".AudioCaptureService"/>
     </application>

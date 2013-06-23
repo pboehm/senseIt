@@ -7,7 +7,9 @@ public class MagneticSensor extends BaseSensorHandler {
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-        value1.setText("" + sensorEvent.values[0]);
+        value1.setText("x = " + sensorEvent.values[0]);
+        value2.setText("y = " + sensorEvent.values[1]);
+        value3.setText("z = " + sensorEvent.values[2]);
     }
 
     @Override

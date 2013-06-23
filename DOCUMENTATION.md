@@ -48,3 +48,145 @@ die Rolle von LabView übernehmen.
 
 Die Entwicklung eines eigenen Treibers hätte den Rahmen des Projektes gesprengt,
 wenn es wegen der nicht-offenen Treiber-Sourcen überhaupt möglich gewesen wäre.
+
+## Projekt 2: Sensoren in der Android-Plattform
+
+Inhalt der Projektaufgabe ist folgendes:
+
+> Untersuchen der Sensor-Unterstützung der Android-Plattform, sowie das
+> Erstellen von Beispielcode für die Ansteuerung der einzelnen Sensoren.
+
+### Sensoren in Android
+
+Android bietet seit der ersten Version Unterstützung für verbaute Sensoren,
+sowie der Verarbeitung der gelieferten Sensordaten. Den Zugriff auf vorhandene
+Sensoren ermöglicht die Klasse
+[`SensorManager`](http://developer.android.com/reference/android/hardware/SensorManager.html).
+Sie enthält zwei wichtige Methoden (`registerListener()` und
+`unregisterListener()`),
+welche es einer App ermöglichen, sich für die Daten eines bestimmten Sensors zu
+registrieren.
+
+Sensoren werden in Android durch eine Instanz der Klasse
+[`Sensor`](http://developer.android.com/reference/android/hardware/Sensor.html)
+repräsentiert. Sie enthalten einige Methoden, um Daten über den Sensor
+bereitzustellen:
+
+- `getMaximumRange()` liefert die maximale Spanne der Werte in der jeweiligen
+  Einheit des Sensors
+- `getMinDelay()` liefert die minimale Verzögerung zwischen zwei Events
+- `getName()` liefert die Bezeichnung eines Sensors
+   (z.B. `K330 3-axis Accelerometer`)
+- `getPower()` liefert den Strom in mA, den der Sensor benötigt, wenn er aktiv
+  ist
+- `getResolution()` liefert die Auflösung des Sensors in der jeweiligen Einheit
+- `getType()` liefert den Typ des Sensors, in Form eine `int`-Konstante
+- `getVendor()` liefert den Hersteller-Namen
+
+### Unterstützte Sensor-Typen
+
+Nachfolgend sind alle unterstützten Sensor-Typen aufgelistet, wobei immer eine
+Konstante `TYPE_XXXXX` angegeben ist. Diese Konstanten sind in der Klasse
+`Sensor` definiert und werden für den Zugriff auf den jeweiligen Sensor
+benötigt. Außerdem werden die gelieferten Daten, in Form eines `SensorEvent`,
+erklärt.
+
+- `TYPE_ACCELEROMETER`
+- `TYPE_GYROSCOPE`
+- `TYPE_LINEAR_ACCELERATION`
+- `TYPE_GRAVITY`
+- `TYPE_ROTATION_VECTOR`
+- `TYPE_AMBIENT_TEMPERATURE`
+- `TYPE_LIGHT`
+- `TYPE_MAGNETIC_FIELD`
+- `TYPE_PRESSURE`
+- `TYPE_PROXIMITY`
+- `TYPE_RELATIVE_HUMIDITY`
+
+### Sensordaten
+
+![Koordinatensystem, welches dem `SensorEvent` zugrunde liegt](axis_device.png)
+
+
+### Beispiel für Ansteuerung eines Sensors
+
+Die Vorgehensweise für die Ansteuerung eines Sensors unter Android ist wie
+folgt:
+
+1. Implementieren einer Java-Klasse, welche das Interface `SensorEventListener`
+   sowie die dazugehörigen Methode `onSensorChanged()` implementiert.
+2. Instanziieren von `SensorManager` und des entsprechenden Sensors
+3. Für Events mit dem entsprechenden Sensor beim `SensorManager`
+registrieren und beim Beenden der App entregistrieren.
+4. Dabei kann man sich auf eine beliebige Anzahl an Sensoren registrieren. Das
+   an `onSensorChanged()` übergebene `SensorEvent` enthält einen Verweis auf den
+   erzeugenden Sensor
+5. Das Betriebssystem ruft nun bei jeder Veränderung des Sensors die Methode
+   `onSensorChanged()` auf und übergibt die jeweiligen Sensordaten als Parameter
+   (`SensorEvent`).
+
+Folgender Beispielcode enthält eine Activity, welche sich für Daten des
+Gravitationssensors registriert und diese dann komponentenweise in das Log
+schreibt. Dieser Code funktioniert für alle Sensoren und erfordert nur die
+Anpassung der `onSensorChanged()`-Methode
+
+``` java
+public class SensorExampleActivity extends Activity implements SensorEventListener{
+
+    private final String TAG = "senseIt"; // für die Log-Ausgabe verwendet
+
+    private SensorManager manager;
+    private Sensor gravitySensor;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        manager = (SensorManager) getSystemService(SENSOR_SERVICE);
+
+        // wir wollen die Daten eines Gravitationssensors haben
+        gravitySensor = manager.getDefaultSensor(Sensor.TYPE_GRAVITY);
+    }
+
+    /**
+     * Wird jeweils dann aufgerufen, wenn die Activity sichtbar wird
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        manager.registerListener(this, gravitySensor,
+            SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    /**
+     * Wird jeweils dann aufgerufen, wenn die Activity nicht mehr sichtbar
+     * ist, also z.B. die App beendet wird oder durch eine andere
+     * Activity überdeckt wird
+     */
+    @Override
+    protected void onPause() {
+        super.onPause();
+        manager.unregisterListener(this);
+    }
+
+    /**
+     * Die Methode wird jeweils aufgerufen, wenn der Sensor neue Daten liefert
+     *
+     * Die Daten stecken jeweils in sensorEvent.values, einem float-Array. Die
+     * Anzahl der Werte ist abhängig vom Sensor.
+     */
+    @Override
+    public void onSensorChanged(SensorEvent sensorEvent) {
+        Log.d(TAG, "x = " + sensorEvent.values[0]);
+        Log.d(TAG, "y = " + sensorEvent.values[1]);
+        Log.d(TAG, "z = " + sensorEvent.values[2]);
+    }
+
+    /**
+     * Wird aufgerufen, wenn sich die Genauigkeit des entsprechenden
+     * Sensors ändert. Wird hier nicht weiter betrachtet.
+     */
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i) {
+    }
+}
+```
