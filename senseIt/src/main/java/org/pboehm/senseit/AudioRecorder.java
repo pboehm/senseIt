@@ -13,10 +13,14 @@ public class AudioRecorder {
     public final String path;
 
     public AudioRecorder(String path) {
-        this.path = sanitizePath(path);
+        this.path = getAudioPath(path);
     }
 
-    private String sanitizePath(String path) {
+    public static String getAudioPath(String audiofile) {
+        return sanitizePath(audiofile);
+    }
+
+    public static String sanitizePath(String path) {
         if (!path.startsWith("/")) {
             path = "/" + path;
         }

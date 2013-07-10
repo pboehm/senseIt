@@ -56,6 +56,10 @@ Inhalt der Projektaufgabe ist folgendes:
 > Untersuchen der Sensor-Unterstützung der Android-Plattform, sowie das
 > Erstellen von Beispielcode für die Ansteuerung der einzelnen Sensoren.
 
+Alle projekt-spezifischen Daten sind unter folgender URL einsehbar:
+
+   [http://git.io/8AvXjg](http://git.io/8AvXjg)
+
 ### Sensoren in Android
 
 Android bietet seit der ersten Version Unterstützung für verbaute Sensoren,
@@ -107,7 +111,7 @@ erklärt.
 
 ![Koordinatensystem, welches dem `SensorEvent` zugrunde liegt](axis_device.png)
 
-
+Error: Argument 0 for @NotNull parameter of com/intellij/openapi/util/io/FileUtil.toSystemDependentName must not be null
 ### Beispiel für Ansteuerung eines Sensors
 
 Die Vorgehensweise für die Ansteuerung eines Sensors unter Android ist wie
@@ -190,3 +194,9 @@ public class SensorExampleActivity extends Activity implements SensorEventListen
     }
 }
 ```
+
+## Möglichkeiten zur Laufzeitverlängerung
+
+- Bentzung eines externen Battery-Packs
+- Deaktivieren aller ungenutzter Funktionen (GSM, WLAN)
+- Erhöhen des 
