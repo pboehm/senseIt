@@ -24,4 +24,9 @@ public class GravitySensor extends BaseSensorHandler {
     protected int getSensorType() {
         return Sensor.TYPE_GRAVITY;
     }
+
+    @Override
+    protected String getUnit() {
+        return "m/s\u00B2";
+    }
 }

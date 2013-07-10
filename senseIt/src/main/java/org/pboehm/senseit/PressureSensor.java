@@ -19,4 +19,9 @@ public class PressureSensor extends BaseSensorHandler {
     protected int getSensorType() {
         return Sensor.TYPE_PRESSURE;
     }
+
+    @Override
+    protected String getUnit() {
+        return "hPa";
+    }
 }

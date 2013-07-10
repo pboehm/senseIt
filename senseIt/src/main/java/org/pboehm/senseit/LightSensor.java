@@ -19,4 +19,9 @@ public class LightSensor extends BaseSensorHandler {
     protected int getSensorType() {
         return Sensor.TYPE_LIGHT;
     }
+
+    @Override
+    protected String getUnit() {
+        return "lx";
+    }
 }

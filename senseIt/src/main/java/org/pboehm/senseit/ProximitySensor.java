@@ -19,4 +19,9 @@ public class ProximitySensor extends BaseSensorHandler {
     protected int getSensorType() {
         return Sensor.TYPE_PROXIMITY;
     }
+
+    @Override
+    protected String getUnit() {
+        return "(cm)";
+    }
 }

@@ -21,4 +21,9 @@ public class GyroscopeSensor extends BaseSensorHandler {
     protected int getSensorType() {
         return Sensor.TYPE_GYROSCOPE;
     }
+
+    @Override
+    protected String getUnit() {
+        return "rad/s";
+    }
 }

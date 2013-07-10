@@ -21,4 +21,9 @@ public class MagneticSensor extends BaseSensorHandler {
     protected int getSensorType() {
         return Sensor.TYPE_MAGNETIC_FIELD;
     }
+
+    @Override
+    protected String getUnit() {
+        return "\u03BCT";
+    }
 }

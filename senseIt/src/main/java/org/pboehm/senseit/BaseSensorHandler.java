@@ -13,7 +13,7 @@ public class BaseSensorHandler extends Activity implements SensorEventListener {
 
     protected SensorManager manager;
     protected Sensor sensor;
-    protected TextView sensor_title, value1, value2, value3;
+    protected TextView sensor_title, value1, value2, value3, unit;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +25,10 @@ public class BaseSensorHandler extends Activity implements SensorEventListener {
         value1 = (TextView) findViewById(R.id.text_for_value1);
         value2 = (TextView) findViewById(R.id.text_for_value2);
         value3 = (TextView) findViewById(R.id.text_for_value3);
+        unit = (TextView) findViewById(R.id.text_for_unit);
+
+        if (getUnit() != "")
+            unit.setText("Unit: " + getUnit());
 
         manager = (SensorManager) getSystemService(SENSOR_SERVICE);
         sensor = manager.getDefaultSensor(getSensorType());
@@ -51,6 +55,10 @@ public class BaseSensorHandler extends Activity implements SensorEventListener {
     protected void onPause() {
         super.onPause();
         manager.unregisterListener(this);
+    }
+
+    protected String getUnit() {
+        return "";
     }
 
     protected String getSensorTitle() {

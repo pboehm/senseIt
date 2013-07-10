@@ -67,4 +67,9 @@ public class AccelerometerSensor extends BaseSensorHandler {
     protected int getSensorType() {
         return Sensor.TYPE_ACCELEROMETER;
     }
+
+    @Override
+    protected String getUnit() {
+        return "m/s\u00B2";
+    }
 }
