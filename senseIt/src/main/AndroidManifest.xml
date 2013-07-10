@@ -48,6 +48,15 @@
             android:name=".MagneticSensor"
             android:screenOrientation="portrait"/>
         <activity
+                android:name=".AmbientTemperatureSensor"
+                android:screenOrientation="portrait"/>
+        <activity
+                android:name=".RelativeHumiditySensor"
+                android:screenOrientation="portrait"/>
+        <activity
+                android:name=".LinearAccelerationSensor"
+                android:screenOrientation="portrait"/>
+        <activity
             android:name=".CaptureMicActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".SensorExampleActivity"/>

@@ -56,7 +56,9 @@ Inhalt der Projektaufgabe ist folgendes:
 > Untersuchen der Sensor-Unterstützung der Android-Plattform, sowie das
 > Erstellen von Beispielcode für die Ansteuerung der einzelnen Sensoren.
 
-Alle projekt-spezifischen Daten sind unter folgender URL einsehbar:
+### Projekt-Daten
+
+Alle projekt-spezifischen Daten sind unter folgender URL bei Github erreichbar:
 
    [http://git.io/8AvXjg](http://git.io/8AvXjg)
 
@@ -95,23 +97,31 @@ Konstante `TYPE_XXXXX` angegeben ist. Diese Konstanten sind in der Klasse
 benötigt. Außerdem werden die gelieferten Daten, in Form eines `SensorEvent`,
 erklärt.
 
+#### Bewegungssensoren
+
 - `TYPE_ACCELEROMETER`
+- `TYPE_GRAVITY`
 - `TYPE_GYROSCOPE`
 - `TYPE_LINEAR_ACCELERATION`
-- `TYPE_GRAVITY`
 - `TYPE_ROTATION_VECTOR`
-- `TYPE_AMBIENT_TEMPERATURE`
+
+#### Umgebungssensoren
+
 - `TYPE_LIGHT`
-- `TYPE_MAGNETIC_FIELD`
+- `TYPE_AMBIENT_TEMPERATURE`
 - `TYPE_PRESSURE`
-- `TYPE_PROXIMITY`
 - `TYPE_RELATIVE_HUMIDITY`
+- `TYPE_TEMPERATURE`
+
+#### Lagesensoren
+
+- `TYPE_MAGNETIC_FIELD`
+- `TYPE_PROXIMITY`
 
 ### Sensordaten
 
 ![Koordinatensystem, welches dem `SensorEvent` zugrunde liegt](axis_device.png)
 
-Error: Argument 0 for @NotNull parameter of com/intellij/openapi/util/io/FileUtil.toSystemDependentName must not be null
 ### Beispiel für Ansteuerung eines Sensors
 
 Die Vorgehensweise für die Ansteuerung eines Sensors unter Android ist wie

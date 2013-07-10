@@ -103,6 +103,9 @@ public class AvailableSensorsActivity extends Activity implements AdapterView.On
             case Sensor.TYPE_MAGNETIC_FIELD:
             case Sensor.TYPE_GYROSCOPE:
             case Sensor.TYPE_PRESSURE:
+            case Sensor.TYPE_AMBIENT_TEMPERATURE:
+            case Sensor.TYPE_RELATIVE_HUMIDITY:
+            case Sensor.TYPE_LINEAR_ACCELERATION:
                 return true;
 
             default:
@@ -139,6 +142,15 @@ public class AvailableSensorsActivity extends Activity implements AdapterView.On
                     break;
                 case Sensor.TYPE_PRESSURE:
                     cl = PressureSensor.class;
+                    break;
+                case Sensor.TYPE_AMBIENT_TEMPERATURE:
+                    cl = AmbientTemperatureSensor.class;
+                    break;
+                case Sensor.TYPE_RELATIVE_HUMIDITY:
+                    cl = RelativeHumiditySensor.class;
+                    break;
+                case Sensor.TYPE_LINEAR_ACCELERATION:
+                    cl = LinearAccelerationSensor.class;
                     break;
             }
             if (cl != null) {
