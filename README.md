@@ -3,6 +3,10 @@
 This projects demonstrates the sensor support in the Android platform. This app is created with
 Android Studio.
 
+## Where is the App?
+
+Take the `senseIt.apk` file in the root of the project.
+
 ## License
 
 Copyright (C) 2013 Philipp Böhm
