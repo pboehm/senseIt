@@ -1,6 +1,6 @@
 # Projekt-Dokumentation
 
-> Sensorik Vorlesung SS 2013 - Philipp Böhm
+> Sensorik Vorlesung SS 2013 - Alternative Prüfungsleistung - Philipp Böhm
 
 ## Projekt 1: NI USB-6008 + Android Smartphone
 
@@ -58,9 +58,79 @@ Inhalt der Projektaufgabe ist folgendes:
 
 ### Projekt-Daten
 
-Alle projekt-spezifischen Daten sind unter folgender URL bei Github erreichbar:
+Alle projekt-spezifischen Daten (darunter die senseIt-App) sind unter folgender
+URL bei Github erreichbar:
 
    [http://git.io/8AvXjg](http://git.io/8AvXjg)
+
+### Einführung in die Android-Entwicklung
+
+Die Entwicklung von Android-Apps geschieht in Java, in Verbindung mit einem
+Android-spezifischen Framework, welches die Eigenheiten des Systems kapselt. Um
+den Anforderungen von Smartphones zu entsprechen, kommt anstatt der
+Java-Virtual-Machine eine Register-basierte Virtuelle Maschine zum Einsatz
+(Dalvik). Diese VM benötigt ein besonderes Bytecode-Format, was dazu führt, dass
+Android-Apps exklusiv auf Smartphones laufen, entgegen dem Java-Slogan "Write
+once, run everywhere".
+
+Entwickelt werden Android-Apps meistens mithilfe einer Entwicklungsumgebung
+(IDE), die dem Entwickler alle wiederkehrenden Aufgaben abnimmt und die
+Android-spezifischen Aufgaben vom Entwickler fern hält. Folgende IDEs können
+verwendet werden:
+
+  * [Eclipse mit ADT-Plugin](http://developer.android.com/sdk/index.html)
+  * [Android Studio](http://developer.android.com/sdk/installing/studio.html)
+
+Android Studio wurde im Rahmen der Google IO 2013 vorgestellt und wir
+langfristig Eclipse als Standard-Plattform ersetzen. Die senseIt-App wurde mit
+Android-Studio entwickelt und für neue Projekte wird der Einsatz von
+Android-Studio empfohlen.
+
+Android-Apps werden in Form einer `apk`-Datei verteilt, die vom Entwickler
+signiert werden muss. Um eine App ohne den Umweg des Play Stores auf dem Gerät
+installieren zu können, ist eine Einstellung auf dem Telefon zu aktivieren:
+
+`Einstellungen` => `Sicherheit` => `Unbekannte Herkunft`
+
+#### Softwaretechnische Grundlagen
+
+Android-Apps bestehen aus sogenannten Activities, wobei es sich Instanzen der
+Klasse `Activity` handelt. Jede "Bildschirmseite" wird dabei von einer
+Java-Klasse implementiert, die ihrerseits von der Klasse `Activity` erbt.
+Erbende Klassen erhalten dadurch Funktionalitäten ihrer Elternklasse und können
+diese für Ihre eigenen Zwecke anpassen.
+
+Activities haben einen bestimmten
+[Lebenszyklus](http://developer.android.com/reference/android/app/Activity.html),
+was bedeutet, dass Android bei jeder aktiven Activity, in wohl definierten
+Fällen, bestimmte Methoden aufruft. In der erbenden Klasse können alle diese
+Methoden überschrieben werden.
+
+![Lebenszyklus einer Android-Activity mit entsprechenden Methoden](activity_lifecycle.png)
+
+Eine der `Activity` sehr ähnliche Komponente ist der `Service`, der im Gegensatz
+zur Activity im Hintergrund läuft und auch aktiv bleiben kann, wenn die
+entsprechende App nicht mehr aktiv ist. In der senseIt-App wurde ein Service
+implementiert, der die Umgebungsgeräusche durch das Mikrofon aufnimmt, auch wenn
+die App gar nicht aktiv ist.
+
+Ein weiteres Konzept, welches in Android häufig zum Einsatz kommt, ist der
+`Listener`. Mittels eines `Listener` kann man sich auf bestimmte Ereignisse
+registrieren, bei dessen Eintreten vom Betriebssystem eine entsprechende Methode
+auf der eigenen Klasse ausgeführt wird. Für Sensor-Daten ist der
+`SensorEventListener` zuständig, dessen Interface mann in seiner Activity
+implementieren muss. Implementieren eines Interface erfolgt mit dem Hinzufügen
+von `implements SensorEventListener` in die Klassen-Definition.  Außerdem müssen
+die Methoden, die das Interface vorschreibt, implementiert werden. Für den
+`SensorEventListener` wären das folgende:
+
+* `onSensorChanged(SensorEvent event)` wird jeweils aufgerufen, wenn der Sensor
+  neue Daten liefert. Im SensorEvent sind dann abhängig vom Sensor die
+  verschiedenen Sensor-Daten enthalten. In dieser Methode wird also die meiste
+  Logik implementiert werden, um die Sensordaten geeignet zu speichern bzw.
+  schon auszuwerten.
+* `onAccuracyChanged(Sensor sensor, int i)` wird aufgerufen, wenn sich die
+  Genauigkeit eines Sensors verändert, was hier nicht näher betrachtet wird.
 
 ### Sensoren in Android
 
@@ -94,8 +164,10 @@ bereitzustellen:
 Nachfolgend sind alle unterstützten Sensor-Typen aufgelistet, wobei immer eine
 Konstante `TYPE_XXXXX` angegeben ist. Diese Konstanten sind in der Klasse
 `Sensor` definiert und werden für den Zugriff auf den jeweiligen Sensor
-benötigt. Außerdem werden die gelieferten Daten, in Form eines `SensorEvent`,
-erklärt.
+benötigt. Welche Daten der jeweilige Sensor liefert, ist der senseIt-App bzw.
+der Android-API-Dokumentation zu entnehmen.
+
+![Koordinatensystem, welches dem `SensorEvent` zugrunde liegt](axis_device.png)
 
 #### Bewegungssensoren
 
@@ -105,6 +177,8 @@ erklärt.
 - `TYPE_LINEAR_ACCELERATION`
 - `TYPE_ROTATION_VECTOR`
 
+[zur Dokumentation](http://developer.android.com/guide/topics/sensors/sensors_motion.html)
+
 #### Umgebungssensoren
 
 - `TYPE_LIGHT`
@@ -113,14 +187,30 @@ erklärt.
 - `TYPE_RELATIVE_HUMIDITY`
 - `TYPE_TEMPERATURE`
 
+[zur Dokumentation](http://developer.android.com/guide/topics/sensors/sensors_environment.html)
+
 #### Lagesensoren
 
 - `TYPE_MAGNETIC_FIELD`
 - `TYPE_PROXIMITY`
 
-### Sensordaten
+[zur Dokumentation](http://developer.android.com/guide/topics/sensors/sensors_position.html)
 
-![Koordinatensystem, welches dem `SensorEvent` zugrunde liegt](axis_device.png)
+
+### Möglichkeiten zur Speicherung von Sensordaten
+
+Für die Speicherung der erfassten Sensor-Daten bieten sich mehrere Lösungen an:
+
+- Speicherung in einer Datenbank auf dem Smartphone. Android stellt einer App
+  `Sqlite`-Datenbanken zur Verfügung. Die Vorteile dieser Lösung sind
+    - Daten können mittels `SQL` entsprechend abgefragt werden
+    - Breite Tool-Unterstützung auf allen Betriebssystemen
+    - Datenbank besteht aus einer einzoigen Datei, die einfach vom Smartphone
+      ennommen werden kann.
+- Speicherung in einem einfachen Textfile, z.B. im Format CSV. Vorteile:
+    - Auf dem Telefon leichter zu implementieren
+    - Abfragen auf den Daten nicht so leicht möglich, eventuell
+      Programmieraufwand nötig
 
 ### Beispiel für Ansteuerung eines Sensors
 
@@ -140,9 +230,9 @@ registrieren und beim Beenden der App entregistrieren.
    (`SensorEvent`).
 
 Folgender Beispielcode enthält eine Activity, welche sich für Daten des
-Gravitationssensors registriert und diese dann komponentenweise in das Log
+Beschleunigungssensors registriert und diese dann komponentenweise in das Log
 schreibt. Dieser Code funktioniert für alle Sensoren und erfordert nur die
-Anpassung der `onSensorChanged()`-Methode
+Anpassung der `onSensorChanged()`-Methode.
 
 ``` java
 public class SensorExampleActivity extends Activity implements SensorEventListener{
@@ -157,7 +247,7 @@ public class SensorExampleActivity extends Activity implements SensorEventListen
         super.onCreate(savedInstanceState);
         manager = (SensorManager) getSystemService(SENSOR_SERVICE);
 
-        // wir wollen die Daten eines Gravitationssensors haben
+        // wir wollen die Daten eines Beschleunigungssensors haben
         gravitySensor = manager.getDefaultSensor(Sensor.TYPE_GRAVITY);
     }
 
@@ -205,8 +295,18 @@ public class SensorExampleActivity extends Activity implements SensorEventListen
 }
 ```
 
-## Möglichkeiten zur Laufzeitverlängerung
+### Möglichkeiten zur Laufzeitverlängerung
 
-- Bentzung eines externen Battery-Packs
-- Deaktivieren aller ungenutzter Funktionen (GSM, WLAN)
-- Erhöhen des 
+Um mit dem Smartphone über eine Dauer von 24 Stunden alle anfallenden
+Sensor-Daten zu erfassen, sowie Geräusche über das Mikrofon aufzunehmen bedarf es
+einiger Vorarbeiten, da alle aktiven Sensoren relativ viel Energie verbrauchen
+und das Smartphone die 24 Stunden sonst nicht überstehen würde.
+
+- Deaktivieren aller ungenutzten Funktionen, besonders aller
+  Mobilfunk-Funktionalitäten (GSM, WLAN). Auf dem Smartphone erfüllt das, das
+  Einstellen des Flugmodus.
+- Erhöhen des Intervalls zwischen der Erfassung zweier Sensor-Daten, sodass der
+  Sensor weniger aktiv ist und weniger Energie verbraucht.
+- Benutzung eines [externen Battery-Packs](http://goo.gl/t7b0i) um das Smartphone
+  während der Nutzung direkt wieder zu laden. Mit Einsatz eines solchen Geräts
+  sollte eine Zeitspanne von 24 Stunden definitiv zu schaffen sein.
